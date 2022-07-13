@@ -4,8 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "nodemon",
-    "start": "nodemon"
+    "test": "mocha",
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "",
