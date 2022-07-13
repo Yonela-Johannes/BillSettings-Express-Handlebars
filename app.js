@@ -6,8 +6,6 @@ const SettingBill = require('./BillFactoryFunction/settings-bill')
 
 const settingsBill = SettingBill()
 
-console.log("Instance", settingsBill.getSettings())
-
 const handlebars = require('express-handlebars')
 app.set('view engine', 'hbs')
 
@@ -29,11 +27,9 @@ app.get('/', (req, res) => {
         settings: settingsBill.getSettings(),
         totals: settingsBill.totals()
     })
-    console.log(settingsBill.getSettings())
 })
 
 app.post('/settings', (req, res) => {
-    console.log(req.body)
     settingsBill.setSettings({
         callCost: req.body.callCost,
         smsCost: req.body.smsCost,
@@ -44,7 +40,6 @@ app.post('/settings', (req, res) => {
 })
 
 app.post('/action', (req, res) => {
-    console.log(req.body.actionType)
     settingsBill.recordAction(req.body.actionType)
     const totals = settingsBill.totals()
     res.redirect('/')
