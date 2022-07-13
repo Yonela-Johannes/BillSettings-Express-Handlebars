@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const PORT = process.env.PORT || 5000
-const SettingBill = require('./BillFactoryFunction/settings-bill')
+const SettingBill = require('./settings-bill')
 
 const settingsBill = SettingBill()
 
