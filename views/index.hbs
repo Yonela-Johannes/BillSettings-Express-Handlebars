@@ -61,7 +61,8 @@
                             <td>
                                 <a href="/actions">Total</a>
                             </td>
-                            <td> R<span class="totalSettings">{{totals.grandTotal}}</span> </td>
+                            <td> R<span class='totalSettings {{className}}'>{{totals.grandTotal}}</span>
+                            </td>
                         </tr>
                     </table>
 
@@ -75,10 +76,10 @@
                         <label for="exampleEmailInput">SMS cost</label>
                         <input class="u-full-width smsCostSetting" step=".01" name="smsCost" type="number"
                             placeholder="eg. 0.65" value="{{settings.smsCost}}">
-                        <label for="">Warning level</label>
+                        <label class="{{warning}}" for="">Warning level</label>
                         <input class="u-full-width warningLevelSetting" step=".01" name="warningLevel" type="number"
                             placeholder="eg. 30.00" class="warningLevel" value="{{settings.warningLevel}}">
-                        <label for="">Critical level</label>
+                        <label class="{{warning}}" for="">Critical level</label>
                         <input class="u-full-width criticalLevelSetting" step=".01" name="criticalLevel" type="number"
                             placeholder="eg. 65.00" value="{{settings.criticalLevel}}">
                         <button class="button-primary updateSettings" type="submit" name="button">Update

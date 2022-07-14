@@ -1,9 +1,9 @@
 const moment = require("moment");
 module.exports = SettingsBill = () => {
-    let smsCost = 0;
-    let callCost = 0;
-    let warningLevel = 0;
-    let criticalLevel = 0;
+    let smsCost;
+    let callCost;
+    let warningLevel;
+    let criticalLevel;
 
     let actionList = [];
 
@@ -31,12 +31,14 @@ module.exports = SettingsBill = () => {
         else if (action === 'call') {
             cost = callCost;
         }
-
-        actionList.push({
-            type: action,
-            cost,
-            timestamp: moment(new Date()).fromNow()
-        });
+        if (cost > 0 && grandTotal() <= criticalLevel && warningLevel <= criticalLevel
+        ) {
+            actionList.push({
+                type: action,
+                cost,
+                timestamp: moment(new Date()).fromNow()
+            });
+        }
     }
     const actions = () => actionList
     const actionsFor = (type) => {
@@ -67,9 +69,9 @@ module.exports = SettingsBill = () => {
         let smsTotal = getTotal('sms')
         let callTotal = getTotal('call')
         return {
-            smsTotal,
-            callTotal,
-            grandTotal: grandTotal()
+            smsTotal: smsTotal.toFixed(2),
+            callTotal: callTotal.toFixed(2),
+            grandTotal: grandTotal().toFixed(2)
         }
     }
 
@@ -77,12 +79,30 @@ module.exports = SettingsBill = () => {
         const total = grandTotal();
         const reachedWarningLevel = total >= warningLevel
             && total < criticalLevel;
-        return reachedWarningLevel;
+        return reachedWarningLevel
     }
 
     const hasReachedCriticalLevel = () => {
         const total = grandTotal();
-        return total >= criticalLevel;
+        return total >= criticalLevel
+    }
+
+    const levels = () => {
+        if (grandTotal() >= criticalLevel) {
+            return 'danger'
+        } else if (grandTotal() >= warningLevel) {
+            return 'warning'
+        } else if (grandTotal() < warningLevel) {
+            return 'go'
+        } else if (warningLevel >= criticalLevel) {
+            return 'none'
+        }
+    }
+
+    const warnings = () => {
+        if (warningLevel > criticalLevel) {
+            return 'danger'
+        }
     }
 
     return {
@@ -93,6 +113,8 @@ module.exports = SettingsBill = () => {
         actionsFor,
         totals,
         hasReachedWarningLevel,
-        hasReachedCriticalLevel
+        hasReachedCriticalLevel,
+        levels,
+        warnings
     }
 }

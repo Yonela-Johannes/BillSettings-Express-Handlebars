@@ -25,7 +25,9 @@ app.use(bodyParser.json())
 app.get('/', (req, res) => {
     res.render('index', {
         settings: settingsBill.getSettings(),
-        totals: settingsBill.totals()
+        totals: settingsBill.totals(),
+        className: settingsBill.levels(),
+        warning: settingsBill.warnings()
     })
 })
 
@@ -40,8 +42,10 @@ app.post('/settings', (req, res) => {
 })
 
 app.post('/action', (req, res) => {
-    settingsBill.recordAction(req.body.actionType)
-    const totals = settingsBill.totals()
+    if (req.body.actionType === 'call' || req.body.actionType === 'sms') {
+        settingsBill.recordAction(req.body.actionType)
+        settingsBill.totals()
+    }
     res.redirect('/')
 })
 

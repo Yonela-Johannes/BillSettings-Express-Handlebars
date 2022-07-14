@@ -5,6 +5,14 @@
   height: auto;
   margin-bottom: 1em;
 }
+.none{
+  color: black;
+  font-weight: bold;
+}
+.go {
+  color: green;
+  font-weight: bold;
+}
 
 .warning {
   color: orange;
